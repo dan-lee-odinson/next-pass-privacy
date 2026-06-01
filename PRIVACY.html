@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Next Pass — Privacy Policy</title>
+  <style>
+    :root {
+      --bg: #050912; --bg-2: #0a1628; --ink: #e0e6ed; --ink-2: #6b8caf;
+      --ink-3: #3d5670; --accent: #c44d28; --line: #1a2940;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      background: radial-gradient(ellipse at top, var(--bg-2) 0%, var(--bg) 100%);
+      color: var(--ink);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      line-height: 1.7; min-height: 100vh;
+    }
+    .page { max-width: 720px; margin: 0 auto; padding: 60px 24px 80px; }
+    header { margin-bottom: 40px; border-bottom: 1px solid var(--line); padding-bottom: 24px; }
+    .brand { font-family: 'JetBrains Mono', 'Consolas', monospace;
+             font-size: 12px; letter-spacing: 0.22em; color: var(--ink-2); }
+    h1 { font-size: 28px; font-weight: 300; letter-spacing: 0.02em; margin-top: 14px; color: var(--ink); }
+    .updated { font-size: 13px; color: var(--ink-3); margin-top: 10px; }
+    h2 { font-size: 18px; font-weight: 500; color: var(--ink); margin: 36px 0 12px;
+         letter-spacing: 0.02em; }
+    p { color: var(--ink); margin-bottom: 14px; font-size: 15px; }
+    ul { padding-left: 22px; margin-bottom: 14px; }
+    li { color: var(--ink); margin-bottom: 8px; font-size: 15px; }
+    strong { color: var(--ink); }
+    code { font-family: 'JetBrains Mono', 'Consolas', monospace;
+           background: var(--bg-2); padding: 1px 6px; border-radius: 3px;
+           font-size: 13px; color: var(--accent); }
+    a { color: var(--accent); }
+    a:hover { color: #d75a35; }
+    .tldr { background: var(--bg-2); border-left: 3px solid var(--accent);
+            padding: 18px 22px; margin: 24px 0; border-radius: 0 4px 4px 0; }
+    .tldr strong { color: var(--accent); letter-spacing: 0.1em; font-size: 11px;
+                   text-transform: uppercase; display: block; margin-bottom: 8px; }
+    footer { margin-top: 60px; padding-top: 24px; border-top: 1px solid var(--line);
+             font-size: 13px; color: var(--ink-3); }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <div class="brand">🛰 NEXT PASS</div>
+      <h1>Privacy Policy</h1>
+      <div class="updated">Last updated: 2026</div>
+    </header>
+
+    <div class="tldr">
+      <strong>TL;DR</strong>
+      Next Pass runs entirely on your computer. We don't have a server, we don't have user accounts, and we don't collect, transmit, or sell your data. Your location and API key stay on your device. The only outside services we contact — and only when you choose to use a feature that needs them — are N2YO (for pass predictions) and OpenStreetMap (for optional address lookup).
+    </div>
+
+    <h2>1. Who we are</h2>
+    <p>"Next Pass" is a free, open-source Chrome browser extension that shows you when the International Space Station will next be visible from your location. This policy describes how the extension handles information.</p>
+
+    <h2>2. What the extension stores on your device</h2>
+    <p>Next Pass saves a small amount of information in your Chrome profile's local storage so the extension works between sessions:</p>
+    <ul>
+      <li><strong>Your viewing location</strong> — latitude, longitude, and optional address label. Stored in Chrome's synced storage so it follows you across devices signed in to your Chrome profile.</li>
+      <li><strong>Your N2YO API key</strong> — stored in Chrome's <em>local</em> storage on this device only. Never synced, never transmitted to any party other than N2YO itself.</li>
+      <li><strong>Notification preferences</strong> — your magnitude threshold and lead-time settings.</li>
+      <li><strong>Cached pass predictions</strong> — to avoid hitting the N2YO API on every popup open. Cache is invalidated automatically after 6 hours or when your location changes.</li>
+    </ul>
+
+    <h2>3. What the extension does NOT collect</h2>
+    <ul>
+      <li>No account, signup, or login</li>
+      <li>No analytics or telemetry</li>
+      <li>No advertising or third-party trackers</li>
+      <li>No browsing history</li>
+      <li>No personal identifiers (no name, email, IP logging, device fingerprinting)</li>
+      <li>No data is ever sold or shared with marketers</li>
+    </ul>
+
+    <h2>4. Third-party services contacted by the extension</h2>
+    <p>Next Pass makes outbound network requests <strong>only</strong> to these two services, and only when you actively use the feature that needs them:</p>
+
+    <p><strong>N2YO Satellite Tracking</strong> (<code>api.n2yo.com</code>) — When you have an API key configured and a location set, the extension sends your coordinates and your API key to N2YO to fetch ISS pass predictions. This happens at most once every 6 hours (cache TTL) plus whenever you change your location. See <a href="https://www.n2yo.com/privacy/" target="_blank" rel="noopener">N2YO's privacy policy</a>.</p>
+
+    <p><strong>OpenStreetMap Nominatim</strong> (<code>nominatim.openstreetmap.org</code>) — When (and only when) you type an address in Settings and click "Look Up", that address is sent to OpenStreetMap's free geocoding service to convert it into coordinates. No request is made if you use auto-detect or manually-typed coordinates instead. See <a href="https://wiki.openstreetmap.org/wiki/Privacy_Policy" target="_blank" rel="noopener">OpenStreetMap's privacy policy</a>.</p>
+
+    <p>The extension does <strong>not</strong> contact any other server. There is no Next Pass backend; we (the developers) don't run any service that receives your data.</p>
+
+    <h2>5. Optional browser permissions and what they're for</h2>
+    <ul>
+      <li><strong>storage</strong> — to save your location, API key, and preferences (described above)</li>
+      <li><strong>geolocation</strong> — used only if you click "Auto-detect" in Settings. You can decline and enter an address or coordinates manually instead.</li>
+      <li><strong>alarms</strong> — to schedule the pre-pass notification at your chosen lead time</li>
+      <li><strong>notifications</strong> — to show the pre-pass alert as a desktop notification</li>
+      <li><strong>host_permissions</strong> — limited to the two domains listed in section 4</li>
+    </ul>
+
+    <h2>6. Data retention</h2>
+    <p>All stored data lives in your Chrome profile until you remove it. You can clear everything Next Pass has saved at any time by:</p>
+    <ul>
+      <li>Clicking the "CLEAR" buttons in Settings (for location and API key individually), or</li>
+      <li>Uninstalling the extension (which removes all data automatically)</li>
+    </ul>
+
+    <h2>7. Children's privacy</h2>
+    <p>Next Pass does not knowingly collect any data from anyone, including children. The extension is suitable for all ages.</p>
+
+    <h2>8. Changes to this policy</h2>
+    <p>If the extension's data handling ever changes (for example if a future premium tier adds an account system), this policy will be updated and the "Last updated" date above will reflect that. The current version of this policy always applies to the version of the extension you have installed.</p>
+
+    <h2>9. Contact</h2>
+    <p>Questions, concerns, or bug reports about Next Pass or this policy? Please reach out at <a href="mailto:REPLACE_ME@example.com">REPLACE_ME@example.com</a>.</p>
+
+    <footer>
+      Next Pass is an independent project. The International Space Station is operated by NASA and partner space agencies. Pass prediction data is provided by N2YO. Geocoding is provided by OpenStreetMap contributors under the ODbL.
+    </footer>
+  </div>
+</body>
+</html>
