@@ -46,12 +46,12 @@
     <header>
       <div class="brand">🛰 NEXT PASS</div>
       <h1>Privacy Policy</h1>
-      <div class="updated">Last updated: June 19, 2026</div>
+      <div class="updated">Last updated: [DATE YOU PUBLISH 7.2.0]</div>
     </header>
 
     <div class="tldr">
       <strong>TL;DR</strong>
-      Next Pass runs entirely on your computer. We don't have a server, we don't have user accounts, and we don't collect, transmit, or sell your data. Your location and API key stay on your device. The only outside services we contact — and only when you choose to use a feature that needs them — are N2YO (for pass predictions) and OpenStreetMap (for optional address lookup).
+      Next Pass runs entirely on your computer. We don't have a server, we don't have user accounts, and we don't collect, transmit, or sell your data. Your location and API key stay on your device. The only outside services we contact — and only when you choose to use a feature that needs them — are N2YO (for pass predictions), OpenStreetMap (for optional address lookup) and, if you turn on the launch schedule, Launch Library 2 (for upcoming rocket launches, with nothing about you sent).
     </div>
 
     <h2>1. Who we are</h2>
@@ -63,7 +63,12 @@
       <li><strong>Your viewing location</strong> — latitude, longitude, and optional address label. Stored in Chrome's synced storage so it follows you across devices signed in to your Chrome profile.</li>
       <li><strong>Your N2YO API key</strong> — stored in Chrome's <em>local</em> storage on this device only. Never synced, never transmitted to any party other than N2YO itself.</li>
       <li><strong>Notification preferences</strong> — your magnitude threshold and lead-time settings.</li>
-      <li><strong>Cached pass predictions</strong> — to avoid hitting the N2YO API on every popup open. Cache is invalidated automatically after 6 hours or when your location changes.</li>
+      <li><strong>Your satellite choice</strong> — which satellite you track (ISS, Tiangong, Hubble or the Meteor-M N2-4 weather satellite). Stored in Chrome's synced storage along with your other preferences.</li>
+      <li><strong>Receiver alert settings</strong> — whether receiver alerts are on, which receivers you picked, how many minutes ahead to be told and the lowest pass worth an alert. Stored in Chrome's synced storage.</li>
+      <li><strong>Launch schedule settings</strong> — whether the launch schedule and its toolbar badge are on, and how many hours before a launch the badge appears. Stored in Chrome's synced storage.</li>
+      <li><strong>Cached pass predictions</strong> — to avoid hitting the N2YO API on every popup open. Kept separately for each satellite. Cache is invalidated automatically after 6 hours or when your location changes.</li>
+      <li><strong>Cached receiver times</strong> — when the ISS is next in range of each online radio receiver listed in the RADIO tab, kept in local storage for up to 12 hours. This is about the receivers' locations, not yours. If you use receiver alerts, local storage also notes which passes it has already told you about, so you aren't told twice; each note is dropped when that pass ends.</li>
+      <li><strong>Cached launch schedule</strong> — the most recent list of upcoming launches, kept in local storage for up to an hour so the extension doesn't ask Launch Library on every popup open. Deleted when you turn the launch schedule off.</li>
     </ul>
 
     <h2>3. What the extension does NOT collect</h2>
@@ -77,11 +82,15 @@
     </ul>
 
     <h2>4. Third-party services contacted by the extension</h2>
-    <p>Next Pass makes outbound network requests <strong>only</strong> to these two services, and only when you actively use the feature that needs them:</p>
+    <p>Next Pass makes outbound network requests <strong>only</strong> to these three services, and only when you actively use the feature that needs them:</p>
 
-    <p><strong>N2YO Satellite Tracking</strong> (<code>api.n2yo.com</code>) — When you have an API key configured and a location set, the extension sends your coordinates and your API key to N2YO to fetch ISS pass predictions. This happens at most once every 6 hours (cache TTL) plus whenever you change your location. See <a href="https://www.n2yo.com/privacy/" target="_blank" rel="noopener">N2YO's privacy policy</a>.</p>
+    <p><strong>N2YO Satellite Tracking</strong> (<code>api.n2yo.com</code>) — When you have an API key configured and a location set, the extension sends your coordinates and your API key to N2YO to fetch ISS pass predictions. This happens at most once every 6 hours for each satellite you track (cache TTL), plus whenever you change your location or switch satellites. If you open the RADIO tab with a key set, or turn on receiver alerts in Settings, the extension also asks N2YO when the ISS will be in range of each listed online radio receiver. Those requests contain the <strong>receivers'</strong> published coordinates and your API key, never your location, and are repeated at most every 12 hours. See <a href="https://www.n2yo.com/privacy/" target="_blank" rel="noopener">N2YO's privacy policy</a>.</p>
 
     <p><strong>OpenStreetMap Nominatim</strong> (<code>nominatim.openstreetmap.org</code>) — When (and only when) you type an address in Settings and click "Look Up", that address is sent to OpenStreetMap's free geocoding service to convert it into coordinates. No request is made if you use auto-detect or manually-typed coordinates instead. See <a href="https://wiki.openstreetmap.org/wiki/Privacy_Policy" target="_blank" rel="noopener">OpenStreetMap's privacy policy</a>.</p>
+
+    <p><strong>Launch Library 2 by The Space Devs</strong> (<code>ll.thespacedevs.com</code>) — Off unless you turn on "Upcoming rocket launches" in Settings, and Chrome asks your permission for this site when you do. Once on, the extension asks Launch Library for the list of upcoming launches at most about once an hour. The request is the same for every user: it contains <strong>no</strong> location, API key, settings or other information about you. Like any website, the service can see the IP address the request comes from. Turning the feature off removes the permission and deletes the cached list.</p>
+
+    <p><strong>Links and LISTEN buttons in the RADIO tab</strong> — The RADIO tab shows amateur-radio frequencies, links to ARISS and AMSAT, and LISTEN buttons for public WebSDR receivers run by volunteers. The extension does not contact these sites itself; they open in a normal browser tab only if you click a LISTEN button or a receiver alert, and what happens there is governed by each site. Most of these receivers use plain http, so Chrome marks them "Not secure".</p>
 
     <p>The extension does <strong>not</strong> contact any other server. There is no Next Pass backend; we (the developers) don't run any service that receives your data.</p>
 
@@ -89,15 +98,17 @@
     <ul>
       <li><strong>storage</strong> — to save your location, API key, and preferences (described above)</li>
       <li><strong>geolocation</strong> — used only if you click "Auto-detect" in Settings. You can decline and enter an address or coordinates manually instead.</li>
-      <li><strong>alarms</strong> — to schedule the pre-pass notification at your chosen lead time</li>
-      <li><strong>notifications</strong> — to show the pre-pass alert as a desktop notification</li>
-      <li><strong>host_permissions</strong> — limited to the two domains listed in section 4</li>
+      <li><strong>alarms</strong> — to schedule the pre-pass notification and, if you turn them on, receiver alerts at your chosen lead time</li>
+      <li><strong>notifications</strong> — to show the pre-pass alert and receiver alerts as desktop notifications</li>
+      <li><strong>host_permissions</strong> — limited to api.n2yo.com and nominatim.openstreetmap.org, listed in section 4</li>
+      <li><strong>optional host permission for ll.thespacedevs.com</strong> — requested only when you turn on the launch schedule in Settings, and given back when you turn it off. You can also remove it at any time from Chrome's own extension settings.</li>
     </ul>
 
     <h2>6. Data retention</h2>
     <p>All stored data lives in your Chrome profile until you remove it. You can clear everything Next Pass has saved at any time by:</p>
     <ul>
-      <li>Clicking the "CLEAR" buttons in Settings (for location and API key individually), or</li>
+      <li>Clicking the "CLEAR" buttons in Settings (for location and API key individually),</li>
+      <li>Turning off "Upcoming rocket launches" in Settings (deletes the cached launch list), or</li>
       <li>Uninstalling the extension (which removes all data automatically)</li>
     </ul>
 
@@ -111,7 +122,7 @@
     <p>Questions, concerns, or bug reports about Next Pass or this policy? Please reach out at <a href="mailto:dan.lee.odinson@gmail.com">dan.lee.odinson@gmail.com</a>.</p>
 
     <footer>
-      Next Pass is an independent project. The International Space Station is operated by NASA and partner space agencies. Pass prediction data is provided by N2YO. Geocoding is provided by OpenStreetMap contributors under the ODbL.
+      Next Pass is an independent project. The International Space Station is operated by NASA and partner space agencies. Pass prediction data is provided by N2YO. Geocoding is provided by OpenStreetMap contributors under the ODbL. Launch data is provided by Launch Library 2 from The Space Devs.
     </footer>
   </div>
 </body>
